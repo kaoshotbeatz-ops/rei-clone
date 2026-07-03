@@ -1,0 +1,14 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Squarespace Inc/Squarespace 6//v6//EN
+BEGIN:VEVENT
+UID:68e56ed8609ef56a41f176a6@squarespace.com
+DTSTAMP:20251007T195512Z
+DTSTART:20251114T170000Z
+DTEND:20251116T010000Z
+SUMMARY:Two Day Racial Equity Institute (REI) Phase 1 Training
+GEO:40.720756;-74.000761
+LOCATION:Grace Covenant Presbyterian Church\, 789 Merrimon Avenue\, Ashevil
+ le\, NC\, 28804\, United States
+END:VEVENT
+END:VCALENDAR
