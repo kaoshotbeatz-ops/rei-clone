@@ -41,6 +41,8 @@
     a.href=url; a.setAttribute('rel','noopener');
     a.style.cssText='display:block;text-decoration:none;color:inherit;cursor:pointer';
     var clone=w.cloneNode(true);                 /* cloneNode drops Squarespace's event listeners */
+    clone.classList.remove('sqs-add-to-cart-button-wrapper');   /* so later runs don't re-wrap it */
+    clone.classList.remove('product-add-to-cart-button-wrapper');
     clone.style.pointerEvents='none';            /* every click falls through to the anchor */
     w.parentNode.insertBefore(a,w);
     a.appendChild(clone);
