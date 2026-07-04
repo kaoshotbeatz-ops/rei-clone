@@ -44,6 +44,8 @@
     var clone=w.cloneNode(true);
     clone.classList.remove('sqs-add-to-cart-button-wrapper');
     clone.classList.remove('product-add-to-cart-button-wrapper');
+    var junk=clone.querySelectorAll('.cart-added-text, [class*="added-text"], .sqs-add-to-cart-button-loading');
+    for(var j=0;j<junk.length;j++)junk[j].remove();   /* drop Squarespace's hidden "Added!" confirmation */
     clone.style.pointerEvents='none';
     w.parentNode.insertBefore(a,w);
     a.appendChild(clone);
