@@ -3,8 +3,8 @@
   var L={
     earlyBird:'https://buy.stripe.com/3cIbJ2ggK30y3U84Swew810',   // $600
     general:'https://buy.stripe.com/6oU28saWq58G0HW70Eew817',      // $750
-    bws:'https://buy.stripe.com/28E1ao6Gabx40HWckYew811',          // $25
-    platinum:'https://buy.stripe.com/cNidRae8C7g076kacQew812',
+    bws:'https://buy.stripe.com/28E14o6Gabx40HWckYew811',          // $25
+    platinum:'https://buy.stripe.com/cNidRae8C7gO76kacQew812',
     gold:'https://buy.stripe.com/eVqaEY3tYbx4cqEfxaew813',
     silver:'https://buy.stripe.com/4gM28s5C6eJgbmA84Iew814',
     community:'https://buy.stripe.com/eVq14oaWq58G1M03Osew815',
