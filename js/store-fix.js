@@ -1,4 +1,4 @@
-/* REI store fix: replace Squarespace's dead add-to-cart buttons with Stripe checkout links. */
+/* REI store fix: replace Squarespace's dead add-to-cart buttons with real Stripe checkout links. */
 (function(){
   var L={
     earlyBird:'https://buy.stripe.com/3cIbJ2ggK30y3U84Swew810',   // $600
@@ -20,30 +20,33 @@
     return null;}
   function urlFor(card){
     if(!card)return null;
-    var sel=card.querySelector&&card.querySelector('select');
-    if(sel){var o=sel.options[sel.selectedIndex];var byv=tier(o?o.text:sel.value);return byv||SPONSOR_PAGE;}
+    if(card.querySelector&&card.querySelector('select'))return SPONSOR_PAGE; /* sponsor: pick tier on detail page */
     var t=(card.textContent||'').toLowerCase();
     if(t.indexOf('black wall street')>-1)return L.bws;
     if(t.indexOf('general registration')>-1)return L.general;
     if(t.indexOf('early bird')>-1)return L.earlyBird;
+    if(/sponsor/.test(t))return SPONSOR_PAGE;
     var ti=tier(t); if(ti)return ti;
     return null;
   }
   function cardOf(el){var n=el;for(var i=0;i<12&&n;i++){n=n.parentElement;if(!n)break;
     var x=n.textContent||'';
-    if(/\$\s?[0-9]/.test(x)&&/(sponsor|registration|tour|early bird|black wall)/i.test(x)&&x.length<900)return n;}
+    if(/\$\s?[0-9]/.test(x)&&/(sponsor|registration|tour|early bird|black wall)/i.test(x)&&x.length<1600)return n;}
     return el.parentElement;}
-  function wire(){
-    var q=document.querySelectorAll('.sqs-add-to-cart-button-wrapper,.product-add-to-cart-button-wrapper,.sqs-add-to-cart-button');
-    for(var i=0;i<q.length;i++){(function(b){
-      if(b.__reiWired)return;b.__reiWired=1;
-      b.addEventListener('click',function(e){
-        var u=urlFor(cardOf(b));
-        if(u){e.preventDefault();e.stopImmediatePropagation();window.location.href=u;}
-      },true);
-      b.style.cursor='pointer';
-    })(q[i]);}
+  function convert(w){
+    if(w.__reiDone)return;
+    var url=urlFor(cardOf(w)); if(!url)return;
+    w.__reiDone=1;
+    var a=document.createElement('a');
+    a.href=url; a.setAttribute('rel','noopener');
+    a.style.cssText='display:block;text-decoration:none;color:inherit;cursor:pointer';
+    var clone=w.cloneNode(true);                 /* cloneNode drops Squarespace's event listeners */
+    clone.style.pointerEvents='none';            /* every click falls through to the anchor */
+    w.parentNode.insertBefore(a,w);
+    a.appendChild(clone);
+    w.parentNode.removeChild(w);                 /* remove original (with its dead SS handlers) */
   }
-  function boot(){wire();[400,1000,2000,3500].forEach(function(ms){setTimeout(wire,ms);});}
+  function run(){var q=document.querySelectorAll('.sqs-add-to-cart-button-wrapper');for(var i=0;i<q.length;i++)convert(q[i]);}
+  function boot(){run();[300,900,1800,3200].forEach(function(ms){setTimeout(run,ms);});}
   if(document.readyState!=='loading')boot();else document.addEventListener('DOMContentLoaded',boot);
 })();
